@@ -1,0 +1,21 @@
+#Login
+
+print("Welcome to the login page")
+
+Prompt1=input("Please enter your username:")
+
+
+
+while (Prompt1!="user"):
+    print("The username entered is not valid")
+    Prompt1=input("please enter a valid username:")
+
+Prompt2=input("Please enter your password:")
+
+if (Prompt2!="pwd"):
+    print("The password entered is not valid")
+    Prompt2=input("please enter a valid password:")
+
+if (Prompt2=="pwd"):
+    print("Thank you your login details are correct!")
+
