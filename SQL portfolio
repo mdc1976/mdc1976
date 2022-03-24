@@ -1,0 +1,244 @@
+PRAGMA foreign_keys = Off;
+
+DROP TABLE IF EXISTS EstateAgent;
+DROP TABLE IF EXISTS Offers;
+DROP TABLE IF EXISTS Owners;
+DROP TABLE IF EXISTS Property;
+DROP TABLE IF EXISTS Staff;
+DROP TABLE IF EXISTS Clients;
+DROP TABLE IF EXISTS Viewings;
+
+PRAGMA foreign_keys = ON;
+
+ 
+
+ 
+
+ 
+
+ 
+
+CREATE TABLE Owners (
+
+ OwnerID INTeger PRIMARY KEY AUTOINCREMENT
+  
+	,FirstName VARCHAR(25) NOT NULL
+	,LastName VARCHAR(25) not NULL
+	,StreetAddress VARCHAR(50)
+	,City VARCHAR(58)
+	,PostCode Varchar(8)
+	,PhoneNumber Int(15) not NULL UNIQUE
+	,ActiveUser VARCHAR(1) NOT NULL
+	);
+
+
+  
+
+CREATE TABLE EstateAgent (
+
+  EstateAgentID Integer PRIMARY KEY AUTOINCREMENT
+
+    ,CompanyName VARCHAR(50) Not NULL
+    ,MainContact VARCHAR(50)
+    ,PhoneNumber Int(15) not NULL UNIQUE
+    ,city varchar(58) Not NULL
+       );
+
+   
+
+ CREATE TABLE Staff(
+
+   StaffID INTeger PRIMARY KEY AUTOINCREMENT
+
+     ,FirstName VARCHAR(25) NOT NULL
+     ,LastName VARCHAR(25) not NULL
+     ,City VARCHAR(58) not NULL
+     ,PhoneNumber Int(15) not NULL UNIQUE
+     );
+
+    
+
+ CREATE TABLE Clients (
+
+    ClientID Integer PRIMARY KEY AUTOINCREMENT
+
+     ,FirstName VARCHAR(25) NOT NULL
+     ,LastName VARCHAR(25) not NULL
+     ,StreetAddress VARCHAR(50)
+     ,City VARCHAR(58)
+     ,PostCode Varchar(8)
+     ,PropertyType VARCHAR(20)
+     ,BedroomsRequired Int(2)
+     ,BathroomsRequired INT(2)
+     ,PhoneNumber VARCHAR(15) not NULL UNIQUE
+     ,ActiveUser VARCHAR(1) NOT NULL
+     );
+
+
+    Create Table Property (
+
+      PropertyID Integer PRIMARY Key AUTOINCREMENT      
+      ,OwnerID Integer
+      ,EstateAgentID integer
+      ,StreetAddress VARCHAR(5) not NULL
+      ,City VARCHAR(58) not NULL
+      ,PostCode Varchar(8) not NULL
+      ,PropertyType VARCHAR(20) not NULL
+      ,Bedrooms Int(2)
+      ,Bathrooms INT(2)
+      ,SalePrice int(8) not NULL
+      ,SaleStatus Varchar(8) not NULL
+      ,FOREIGN Key (OwnerID) REFERENCES Owners (OwnerID)
+       FOREIGN Key (EstateAgentID) REFERENCES EstateAgent (EstateAgentID)
+                      );
+
+      
+
+      CREATE TABLE Viewings (
+
+        ViewingId Integer PRIMARY Key AUTOINCREMENT        
+        ,PropertyID Integer
+        ,ClientID INTeger
+        ,StaffID INTeger
+        ,ViewingDate date not NULL
+        ,ViewingTime    Varchar(8) not NULL
+        ,FOREIGN Key (PropertyID) REFERENCES Property (PropertyID)
+        ,FOREIGN Key (ClientID) REFERENCES Clients (ClientID)
+        FOREIGN Key (StaffID) REFERENCES Staff (StaffID)
+              );
+
+     
+
+      Create TABLE Offers (
+
+        OfferID Integer PRIMARY Key AUTOINCREMENT
+
+        ,ClientID integer
+        ,PropertyID integer
+        ,OfferAmount decimal(6,2) not NULL
+        ,OfferAccepted Varchar(12) not NULL
+        ,DateOfOffer Date       not NULL
+        ,FOREIGN Key (ClientID) REFERENCES Clients (ClientID)
+        FOREIGN Key (PropertyID) REFERENCES Property (PropertyID)
+        );
+
+      
+
+      INSERT INTO Owners (firstname, lastname, streetaddress, city, postcode, phonenumber, activeuser)
+      VALUES ('Bibi', 'Treversh', '140 Hallows Park', 'Manchester', 'M17 3SA', 039185630641, 'yes'),
+      ('Katina', 'Priestland', '140 Victoria Park', 'Manchester', 'M12 3BQ', 017952034, 'yes'),
+      ('Karee', 'Drain', '83 Elgar Way', 'Leeds', 'LS21 4GH', 85544546316, 'yes'),
+      ('Emma', 'Andrews', '58 Sheridan Court', 'Bradford', 'B29 5SD', 045289652989, 'yes'),
+      ('Micky', 'Josephs', '43 Scott Place', 'Manchester', ' M21 4YJ', 027867422810, 'yes');
+  
+ 
+     
+      Insert into EstateAgent (companyname, maincontact, phonenumber, city)
+      Values ('Hills-Beatty', 'John', 0161252658, 'Manchester'),
+      ('Christiansen-Heaney', 'Sue', 0161231415, 'Cardiff'),
+      ('Buckridge-Bartoletti', 'Paul', 0161251365, 'Leeds'),
+      ('Boyer LLC', 'Ringo', 0161897654, 'Manchester'),
+      ('Swaniawski Inc', 'George', 0161235478, 'Manchester');                     
+
+                      
+
+      Insert INTO Clients (firstname, lastname, streetaddress, city, postcode, propertytype, bedroomsrequired, bathroomsrequired, phonenumber, activeuser)
+      Values ('Carissa', 'Cawdery', '66 Monterey Centre', 'London', 'SE11 1DR', 'House', 5, 3, 07528639417, 'yes'),
+      ('Giselle', 'Hollindale', '58 Tennyson Streete', 'Newcastle', 'N4 9PU', 'House', Null, NULL, 07412356956, 'yes'),
+      ('Nevsa', 'Dutnell', '31 Banding Trail', 'Manchester', 'M1 2WC', 'House', 4, 2, 07951753852, 'yes'),
+      ('Amil', ' Grenkov', '79 Clove Street', 'Manchester', 'M20 4BG', 'house', 3, 1, 07489156723, 'yes'),
+      ('Hiram', 'Dunford', '19 Charing Cross Place', 'Leeds', 'LS6 6FF', 'house', NULL, Null, 07935716284, 'yes');
+
+     
+
+                  
+
+        
+
+      Insert INTO  Staff (firstname, lastname, city, phonenumber)
+      Values ('Amy', 'Grewe', 'Manchester', 07591633241),
+      ('Darsie', 'Dance', 'Manchester', 07558969414),
+      ('Heywood', 'Westwood', 'Salford', 07412563258),
+      ('Deanna', 'Eborn', 'Stockport', 07963852741),
+      ('Ced', 'Yetton', 'Stockport', 07365214895);
+
+     
+
+         
+
+      
+
+      insert into Property (OwnerID, EstateAgentID, streetaddress, city, postcode, propertytype, bedrooms, bathrooms, SalePrice, salestatus)
+      VALUES (1, 1, '28 Kinsman Hill', 'Manchester', 'M20 9WR', 'house', 4, 2, 272867, 'Sold'),
+      (2, 1, '77 Nobel Parkway', 'London', 'SE15 2RP', 'commercial', 3, 1, 175780, ' unsold'),
+      (3, 2, '4 Rockefeller Crossing', 'Manchester', 'M12 6BN', 'house', 6, 3, 287429, 'unsold'),
+      (4, 2, '2 Junction', 'Leeds', 'LS9 5KL', 'house', 5, 1, 268249, 'unsold'),
+      (5, 3, '7 Basil Hill', 'Manchester', 'M1 1PS', 'commercial', Null, Null, 204854, 'sold'),
+      (5, 3, '6 Mitchell Court', 'Manchester', 'M50 9AH', 'house', 4, 2, 231120, 'unsold'),
+      (1, 4, '64 Crescent Oaks Alley', 'Liverpool', 'L3 3ZA', 'house', 7, 4, 300000, 'unsold'),
+      (2, 4, '8 Logan Pass', 'Liverpool', 'L4 8DF', 'house', 3, 1, 160756, 'sold'),
+      (3, 5, '83 Service Court', 'Manchester', 'M25 9BM', 'house', 3, 2, 194358, 'sold'),
+      (4, 5, '9 Golf Pass', 'Manchester', 'M17 4QE', 'house', 5, 2, 274822, 'unsold');
+
+     
+
+      
+
+     Insert into Viewings (PropertyId, clientID, staffID, viewingdate, viewingtime)
+     Values (1, 1, 1, '2020-07-09', '20:13:06'),
+	    (2, 1, 1, '2020-10-07', '14:36:41'),
+   	  (3, 2, 2, '22020-10-07', '15:01:06'),
+ 	    (4, 2, 2, '2020-11-09', '14:21:19'),
+  	  (5, 3, 3, '2020-12-07', '14:36:50'),
+  	  (6, 3, 3, '2020-12-08', '14:25:37'),
+      (7, 4, 4, '2020-07-09', '21:41:14'),
+      (8, 4 ,4, '2020-10-09', '17:55:42'),
+	    (9, 5, 5, '2020-10-07', '13:20:09'),
+	    (10, 5, 5, '2020-11-08', '13:22:21');
+
+ 
+ 
+
+	  INSERT INTO Offers (ClientID, PropertyID, offeramount, OfferAccepted, dateofoffer)
+      Values(1, 1, 237350.09, 'Accepted', '2020-10-07'),
+      (1, 2, 167667.27, 'Not Accepted', '2020-10-08'),
+      (2, 3, 174990.51, 'Not Accepted', '2020-10-08'),
+      (2, 4, 231261.71, 'Accepted', '2020-10-09'),
+      (3, 5, 215716.17, 'Accepted', '2020-10-08'),
+      (3, 6, 171437.58, 'Not Accepted', '2020-10-08'),
+      (4, 7, 240183.82, 'Accepted', '2020-10-08'),
+      (4, 8, 269592.57, 'Accepted', '2020-10-07'),
+      (5, 9, 177028.21, 'Not Accepted', '2020-10-07'),
+      (5, 10, 247666.22, 'Accepted', '2020-10-07');
+
+   
+
+   
+    
+    SELECT streetaddress, postcode, city, saleprice FROM Property
+    WHERE 'Manchester' = city and saleprice > 200000.00
+    
+    
+    
+    
+  select firstname, lastname, saleprice, propertytype
+  from Property INNER JOIN Owners on owners.propertyid = Property.propertyid
+  where propertytype = 'house', and sum(saleprice);
+      
+    
+   Select A.ownerid, Sum(B.saleprice) As PortfolioHousesTotalValue   
+FRom Owners A    Left Join Property B On A.Ownerid = B.ownerid
+Where B.PropertyType = 'house' Group By A.OwnerID
+; 
+   
+ 	  
+    
+ 
+    
+    
+    
+    
+    
+ 
+    
+   
