@@ -1,0 +1,24 @@
+#Student gets 10% discount
+
+print("welcome to Michaels Coffee Shop")
+
+#Start by taking the required information
+
+prompt1=input("student type student, staff type staff, unknown type unknown:")
+
+full_price=int(input("please enter value of purchase:"))
+
+print(prompt1)
+
+#Then code to report back on screen what the results will be depending on the variable inputted
+
+if prompt1==("student"):    
+    full_price=full_price*0.9
+
+elif prompt1==("staff"):
+    full_price=full_price
+
+elif prompt1==("unknown"):
+    full_price=full_price
+
+print("total price :£", full_price)
