@@ -1,0 +1,30 @@
+#requesting data from python on current date etc.
+
+from datetime import date, timedelta, datetime
+
+#requesting data from user to conduct the formula to find age
+
+Day_of_birth=int(input("Please enter you the date of the day you were born in number format:"))
+Month_of_birth=int(input("Please enter the month in the year you were born in number format:"))
+Year_of_birth=int(input("Please enter the year you were born using all 4 digits:"))
+
+#ordering the results
+
+dob=date(Year_of_birth, Month_of_birth, Day_of_birth)
+
+print(dob)
+
+now = datetime.utcnow()
+now = now.date()
+
+#formula to work out Age
+age = (now - dob) // timedelta(days=365)
+
+print(age)
+
+
+
+
+
+
+
