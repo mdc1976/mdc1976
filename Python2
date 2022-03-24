@@ -1,0 +1,16 @@
+#Fruits list
+
+fruits=["apple", "orange", "strawberry"]
+
+fruits.append("mango")
+
+print(fruits)
+
+del fruits[0]
+
+print(fruits)
+
+
+fruits.remove('strawberry')
+
+print(fruits)
